@@ -1,13 +1,24 @@
 import express, { Router } from 'express'
+import { MongoClient } from 'mongodb'
+
+const client = new MongoClient(process.env.MONGO_URI!, {
+  serverApi: {
+    version: '1',
+    deprecationErrors: true,
+    strict: true,
+  },
+})
 
 const getSecrets = async (req: express.Request, res: express.Response) => {
   try {
-    const url = process.env.MONGO_URI!
+    await client.connect()
+    await client.db('admin').command({ ping: 1 })
+    const database = client.db('my_secrets')
+    const collection = database.collection('secrets')
 
-    const response = await fetch(url)
-    const data = await response.json()
+    const findResult = await collection.find({}).toArray()
 
-    res.send(data)
+    res.send(findResult)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error)

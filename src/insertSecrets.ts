@@ -1,14 +1,10 @@
 import express, { Router } from 'express'
 import { client } from './client'
-import { ObjectId } from 'mongodb'
-
-const id = new ObjectId()
 
 const insertSecrets = async (req: express.Request, res: express.Response) => {
   try {
-    const { name, age, tags, gender, secret } = req.query
-
-    const dataToInsert = { name: name, age: age, tags: tags, gender: gender, secret: secret, id: id }
+    const { age, tags, gender, secret } = req.body
+    const dataToInsert = { age: age, tags: tags, gender: gender, secret: secret }
 
     await client.connect()
     const database = client.db('my_secrets')
@@ -22,6 +18,6 @@ const insertSecrets = async (req: express.Request, res: express.Response) => {
 
 const router = Router()
 
-router.get('/', insertSecrets)
+router.post('/', insertSecrets)
 
 export default router

@@ -1,13 +1,5 @@
 import express, { Router } from 'express'
-import { MongoClient } from 'mongodb'
-
-const client = new MongoClient(process.env.MONGO_URI!, {
-  serverApi: {
-    version: '1',
-    deprecationErrors: true,
-    strict: true,
-  },
-})
+import { client } from './client'
 
 const getSecrets = async (req: express.Request, res: express.Response) => {
   try {

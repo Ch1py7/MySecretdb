@@ -4,12 +4,15 @@ import { client } from './client'
 const insertSecrets = async (req: express.Request, res: express.Response) => {
   try {
     const { age, tags, gender, secret, likes, dislikes } = req.body
-    const dataToInsert = { age: age, tags: tags, gender: gender, secret: secret, likes: likes, dislikes: dislikes }
+    const dataToInsert = { age, tags, gender, secret, likes, dislikes }
 
     await client.connect()
     const database = client.db('my_secrets')
     const collection = database.collection('secrets')
     await collection.insertOne(dataToInsert)
+
+    res.sendStatus(201)
+    
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error)

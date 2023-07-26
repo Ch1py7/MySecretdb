@@ -4,6 +4,7 @@ import express from 'express'
 import secrets from './secrets'
 import insertSecrets from './insertSecrets'
 import updateLikes from './updateLikes'
+import updateDislikes from './updateDislikes'
 import cors from 'cors'
 
 const app = express()
@@ -22,6 +23,7 @@ app.listen(process.env.PORT, () => {
 
 app.use('/api/secrets', secrets)
 app.use('/api/insert', insertSecrets)
-app.use('/api/update', updateLikes)
+app.use('/api/updatelikes', updateLikes)
+app.use('/api/updatedislikes', updateDislikes)
 
 export default app

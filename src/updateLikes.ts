@@ -6,7 +6,7 @@ const updateLikes = async (req: express.Request, res: express.Response) => {
   try {
     const { id, likes, isLike } = req.body
     const _id = new ObjectId(id)
-    const updateLikes = { $set: { likes: isLike ? likes + 1 : likes - 1 } }
+    const updateLikes = { $set: { likes: isLike ? likes + 1 : likes } }
 
     await client.connect()
     const database = client.db('my_secrets')

@@ -18,7 +18,7 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
     const database = client.db('my_secrets')
     const collection = database.collection('secrets')
 
-    const findResult = (await collection.find().skip(skip).limit(limit).toArray()).reverse()
+    const findResult = await collection.find().skip(skip).limit(limit).toArray()
 
     res.send(findResult)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

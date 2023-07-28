@@ -2,7 +2,7 @@ import express, { Router } from 'express'
 import { client } from './client'
 
 const getSecrets = async (req: express.Request, res: express.Response) => {
-  const { page, pageSize } = req.query
+  const { page, pageSize, tagFilter, ageFilter } = req.query
 
   const pageNumber = parseInt(page as string, 10) || 1
   const limit = parseInt(pageSize as string, 10) || 10
@@ -14,7 +14,6 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
   
   try {
     await client.connect()
-    await client.db('admin').command({ ping: 1 })
     const database = client.db('my_secrets')
     const collection = database.collection('secrets')
 
@@ -23,9 +22,12 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
         { $sort: { _id: -1 } },
         { $skip: skip },
         { $limit: limit },
+        tagFilter ? { $match: { tags: tagFilter} } : { $match: {} },
+        ageFilter ? { $match: { age: ageFilter} } : { $match: {} },
       ])
       .toArray()
 
+    console.log(findResult)
     res.send(findResult)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

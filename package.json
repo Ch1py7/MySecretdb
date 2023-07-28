@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "build": "tsc"
+    "build": "tsc build --output public"
   },
   "keywords": [],
   "author": "",

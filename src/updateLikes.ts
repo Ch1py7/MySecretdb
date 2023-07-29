@@ -16,7 +16,6 @@ const updateLikes = async (req: express.Request, res: express.Response) => {
 
     res.sendStatus(201)
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: unknown | undefined) {
     console.error(error)
     res.status(500).send({ error: 'An error occurred while processing your request.' })

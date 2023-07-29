@@ -30,7 +30,7 @@ const insertSecrets = async (req: express.Request, res: express.Response) => {
 const router = Router()
 
 const validateTags = (value: string) => {
-  const tagsRegex = /^(?:[a-zA-Z0-9]{1,7}(?:,|$)){1,3}$/
+  const tagsRegex = /^(?:[a-zA-Z0-9]{1,7}(?:,|$)){0,3}$/
   if (!tagsRegex.test(value)) {
     throw new Error('Invalid tags')
   }
@@ -40,7 +40,7 @@ const validateTags = (value: string) => {
 router.post('/',
   [
     body('age').isInt({ min: 12, max: 99 }).withMessage('Age must be between 12 and 99'),
-    body('tags').optional().custom(validateTags),
+    body('tags').custom(validateTags),
     body('gender').isIn(['man', 'woman']).withMessage('Invalid gender'),
     body('secret').isString().isLength({ max: 420 }).withMessage('Invalid secret'),
     body('likes').custom((value) => value === 0).withMessage('Invalid likes'),

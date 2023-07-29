@@ -1,7 +1,8 @@
 import express, { Router } from 'express'
-import { client } from './client'
+import { closeDatabaseConnection, connectToDatabase } from './client'
 
 const getSecrets = async (req: express.Request, res: express.Response) => {
+  let client
   const { page, pageSize, tagFilter, ageFilter } = req.query
 
   const pageNumber = parseInt(page as string, 10) || 1
@@ -13,9 +14,8 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
   }
   
   try {
-    await client.connect()
-    const database = client.db('my_secrets')
-    const collection = database.collection('secrets')
+    client = await connectToDatabase()
+    const collection = client.collection('secrets')
 
     const findResult = await collection
       .aggregate([
@@ -30,9 +30,11 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
     console.log(findResult)
     res.send(findResult)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
+  } catch (error: unknown | undefined) {
     console.error(error)
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: 'An error occurred while processing your request.' })
+  } finally {
+    if (client) await closeDatabaseConnection()
   }
 }
 

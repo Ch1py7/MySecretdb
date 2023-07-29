@@ -1,25 +1,27 @@
 import express, { Router } from 'express'
 import { ObjectId } from 'mongodb'
-import { client } from './client'
+import { closeDatabaseConnection, connectToDatabase } from './client'
 
 const updateLikes = async (req: express.Request, res: express.Response) => {
+  let client
   try {
     const { id, likes, isLike } = req.body
     const _id = new ObjectId(id)
     const updateLikes = { $set: { likes: isLike ? likes + 1 : likes } }
 
-    await client.connect()
-    const database = client.db('my_secrets')
-    const collection = database.collection('secrets')
+    client = await connectToDatabase()
+    const collection = client.collection('secrets')
 
     await collection.updateOne({ _id }, updateLikes)
 
     res.sendStatus(201)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
+  } catch (error: unknown | undefined) {
     console.error(error)
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: 'An error occurred while processing your request.' })
+  } finally {
+    if (client) await closeDatabaseConnection()
   }
 }
 

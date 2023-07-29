@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "tscs": "pnpm build && pnpm start"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-validator": "^7.0.1",
     "mongodb": "^5.7.0"
   },
   "devDependencies": {

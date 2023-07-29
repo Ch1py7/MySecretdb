@@ -39,12 +39,25 @@ const validateTags = (value: string) => {
 
 router.post('/',
   [
-    body('age').isInt({ min: 12, max: 99 }).withMessage('Age must be between 12 and 99'),
-    body('tags').custom(validateTags),
-    body('gender').isIn(['man', 'woman']).withMessage('Invalid gender'),
-    body('secret').isString().isLength({ max: 420 }).withMessage('Invalid secret'),
-    body('likes').custom((value) => value === 0).withMessage('Invalid likes'),
-    body('dislikes').custom((value) => value === 0).withMessage('Invalid dislikes'),
+    body('age')
+      .isInt({ min: 12, max: 99 })
+      .withMessage('Age must be between 12 and 99'),
+    body('tags')
+      .custom(validateTags),
+    body('gender')
+      .isIn(['man', 'woman'])
+      .withMessage('Invalid gender'),
+    body('secret')
+      .isString()
+      .isLength({ max: 420 })
+      .matches(/^[a-zA-Z0-9\s]+$/)
+      .withMessage('Invalid secret'),
+    body('likes')
+      .custom((value) => value === 0 && typeof value === 'number')
+      .withMessage('Invalid likes'),
+    body('dislikes')
+      .custom((value) => value === 0 && typeof value === 'number')
+      .withMessage('Invalid dislikes'),
   ],
   insertSecrets)
 

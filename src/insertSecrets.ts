@@ -1,6 +1,7 @@
 import express, { Router } from 'express'
 import { body, validationResult } from 'express-validator'
 import { closeDatabaseConnection, connectToDatabase } from './client'
+import { Secret } from './domain/secret/Secret'
 
 const insertSecrets = async (req: express.Request, res: express.Response) => {
   let client
@@ -11,11 +12,18 @@ const insertSecrets = async (req: express.Request, res: express.Response) => {
     }
 
     const { age, tags, gender, secret, likes, dislikes } = req.body
-    const dataToInsert = { age, tags, gender, secret, likes, dislikes }
+    const dataToInsert = new Secret({ age, tags, gender, secret, likes, dislikes })
 
     client = await connectToDatabase()
     const collection = client.collection('secrets')
-    await collection.insertOne(dataToInsert)
+    await collection.insertOne({
+      age: dataToInsert.age,
+      tags: dataToInsert.tags,
+      gender: dataToInsert.gender,
+      secret: dataToInsert.secret,
+      likes: dataToInsert.likes,
+      dislikes: dataToInsert.dislikes,
+    })
 
     res.sendStatus(201)
     

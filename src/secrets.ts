@@ -23,7 +23,7 @@ const getSecrets = async (req: express.Request, res: express.Response) => {
         { $skip: skip },
         { $limit: limit },
         tagFilter ? { $match: { tags: tagFilter} } : { $match: {} },
-        ageFilter ? { $match: { age: ageFilter} } : { $match: {} },
+        ageFilter ? { $match: { age: Number(ageFilter) } } : { $match: {} },
       ])
       .toArray()
 

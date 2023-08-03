@@ -42,7 +42,7 @@ router.post('/',
       .isInt({ min: 12, max: 99 })
       .withMessage('Age must be between 12 and 99'),
     body('gender')
-      .isIn(['man', 'woman'])
+      .isIn(['man', 'woman', 'other'])
       .withMessage('Invalid gender'),
     body('secret')
       .isString()

@@ -11,18 +11,17 @@ const insertSecrets = async (req: express.Request, res: express.Response) => {
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { age, tags, gender, secret, likes, dislikes } = req.body
-    const dataToInsert = new Secret({ age, tags, gender, secret, likes, dislikes })
+    const { age, gender, secret, likes, anonName } = req.body
+    const dataToInsert = new Secret({ age, gender, secret, likes, anonName })
 
     client = await connectToDatabase()
     const collection = client.collection('secrets')
     await collection.insertOne({
       age: dataToInsert.age,
-      tags: dataToInsert.tags,
       gender: dataToInsert.gender,
       secret: dataToInsert.secret,
       likes: dataToInsert.likes,
-      dislikes: dataToInsert.dislikes,
+      anonName: dataToInsert.anonName,
     })
 
     res.sendStatus(201)
@@ -37,21 +36,11 @@ const insertSecrets = async (req: express.Request, res: express.Response) => {
 
 const router = Router()
 
-const validateTags = (value: string) => {
-  const tagsRegex = /^(?:[a-zA-Z0-9]{1,7}(?:,|$)){0,3}$/
-  if (!tagsRegex.test(value)) {
-    throw new Error('Invalid tags')
-  }
-  return true
-}
-
 router.post('/',
   [
     body('age')
       .isInt({ min: 12, max: 99 })
       .withMessage('Age must be between 12 and 99'),
-    body('tags')
-      .custom(validateTags),
     body('gender')
       .isIn(['man', 'woman'])
       .withMessage('Invalid gender'),
@@ -63,9 +52,10 @@ router.post('/',
     body('likes')
       .custom((value) => value === 0 && typeof value === 'number')
       .withMessage('Invalid likes'),
-    body('dislikes')
-      .custom((value) => value === 0 && typeof value === 'number')
-      .withMessage('Invalid dislikes'),
+    body('anonName')
+      .isString()
+      .isLength({ max: 10 })
+      .withMessage('Invalid anonName'),
   ],
   insertSecrets)
 

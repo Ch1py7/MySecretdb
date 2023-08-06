@@ -47,7 +47,7 @@ router.post('/',
     body('secret')
       .isString()
       .isLength({ max: 420 })
-      .matches(/^[a-zA-Z0-9\s!¡?¿,.:'"¡"'.\s]+$/)
+      .matches(/^[a-zA-Z0-9\s!¡?¿,.:'"¡"'.\sáéíóúÁÉÍÓÚñÑ]+$/)
       .withMessage('Invalid secret'),
     body('likes')
       .custom((value) => value === 0 && typeof value === 'number')

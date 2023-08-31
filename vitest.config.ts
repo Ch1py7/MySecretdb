@@ -9,7 +9,9 @@ export default defineConfig({
   resolve: {
     alias: {
       tests: path.resolve(__dirname, 'src/__tests__'),
-      domain: path.resolve(__dirname, 'src/domain/')
+      application: path.resolve(__dirname, 'src/application/'),
+      domain: path.resolve(__dirname, 'src/domain/'),
+      infrastructure: path.resolve(__dirname, 'src/infrastructure/'),
     },
   }
 })

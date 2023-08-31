@@ -3,7 +3,7 @@
     "baseUrl": "./src",
     "paths": {
       "src/*": ["*"],
-      "application": ["/application/*, /application"],
+      "application": ["/application/*", "/application"],
       "domain": ["/domain/*", "/domain"],
       "infrastructure": ["/infrastructure/*", "/infrastructure"],
       "types": ["/types/*", "/types"]

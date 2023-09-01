@@ -1,4 +1,4 @@
-import { saveSecretCommandConstructor } from 'src/application/types/save-secret-constructor'
+import { saveSecretCommandConstructor } from 'application/types/save-secret-constructor'
 
 export class SaveSecretCommand {
   public age: number

@@ -1,4 +1,4 @@
-import { saveSecretResponseConstructor } from 'src/application/types/save-secret-constructor'
+import { saveSecretResponseConstructor } from 'application/types/save-secret-constructor'
 
 export class SaveSecretResponse {
   private _age: number

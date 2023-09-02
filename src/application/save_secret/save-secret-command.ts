@@ -1,4 +1,4 @@
-import { saveSecretCommandConstructor } from 'application/types/save-secret-constructor'
+import { SaveSecretCommandConstructor } from 'application/types/save-secret-constructor'
 
 export class SaveSecretCommand {
   public age: number
@@ -7,7 +7,7 @@ export class SaveSecretCommand {
   public secret: string
   public likes: number
 
-  constructor({age, gender, secret, likes, anonName}: saveSecretCommandConstructor) {
+  constructor({age, gender, secret, likes, anonName}: SaveSecretCommandConstructor) {
     this.age = age
     this.gender = gender
     this.anonName = anonName

@@ -1,6 +1,6 @@
 
 
-export interface saveSecretResponseConstructor {
+export interface SaveSecretResponseConstructor {
   age: number,
   gender: 'man' | 'woman' | 'other',
   secret: string,
@@ -8,7 +8,7 @@ export interface saveSecretResponseConstructor {
   likes: number,
 }
 
-export interface saveSecretCommandConstructor {
+export interface SaveSecretCommandConstructor {
   age: number,
   gender: 'man' | 'woman' | 'other',
   secret: string,

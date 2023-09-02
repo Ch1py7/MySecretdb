@@ -1,4 +1,4 @@
-import { saveSecretResponseConstructor } from 'application/types/save-secret-constructor'
+import { SaveSecretResponseConstructor } from 'application/types/save-secret-constructor'
 
 export class SaveSecretResponse {
   private _age: number
@@ -7,7 +7,7 @@ export class SaveSecretResponse {
   private _secret: string
   private _likes: number
 
-  constructor({ age, anonName, gender, likes, secret }: saveSecretResponseConstructor) {
+  constructor({ age, anonName, gender, likes, secret }: SaveSecretResponseConstructor) {
     this._age = age
     this._gender = gender
     this._anonName = anonName

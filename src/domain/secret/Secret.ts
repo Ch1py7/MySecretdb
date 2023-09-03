@@ -1,7 +1,7 @@
 import { Gender, SecretEntity } from 'domain/types/Secret'
 import { InvalidSecretError, InvalidSecretMessages } from './errors/invalidSecretError'
 
-export class Secret implements SecretEntity {
+export class Secret {
   private _age: number
   private _gender: Gender
   private _anonName: string
@@ -93,16 +93,6 @@ export class Secret implements SecretEntity {
   private _assertAnonName(anonName: string) {
     if (typeof anonName !== 'string' || anonName.length > 10) {
       throw new InvalidSecretError(InvalidSecretMessages.INVALID_ANONNAME)
-    }
-  }
-
-  getDataForRequest(): SecretEntity {
-    return {
-      anonName: this._anonName,
-      age: this._age,
-      gender: this._gender,
-      secret: this._secret,
-      likes: this._likes,
     }
   }
 }

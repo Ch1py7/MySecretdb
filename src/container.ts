@@ -3,6 +3,7 @@ import { SaveSecret } from 'application/save_secret'
 import { DbHandler } from 'infrastructure/persistance/mongo/db-handler'
 import { MongoSecretRepository } from 'infrastructure/persistance/mongo/mongo-secret-repository'
 import { secretParser } from './infrastructure/persistance/mongo/secret-document-parser'
+import { UpdateLike } from './application/update_likes'
 
 const container = createContainer<Dependencies>({
   injectionMode: InjectionMode.PROXY,
@@ -12,7 +13,8 @@ container.register({
   dbHandler: asFunction(DbHandler),
   saveSecret: asClass(SaveSecret),
   secretRepository: asClass(MongoSecretRepository),
-  secretDocumentParser: asFunction(secretParser)
+  secretDocumentParser: asFunction(secretParser),
+  updateLike: asClass(UpdateLike)
 })
 
 export default container

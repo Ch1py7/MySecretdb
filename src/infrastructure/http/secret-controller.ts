@@ -4,10 +4,11 @@ import { body } from 'express-validator'
 import container from 'src/container'
 import { InvalidSecretError } from 'domain/secret/errors/invalid-secret-error'
 import { InvalidMessages } from './validation-values'
+import { UpdateLikeCommand } from 'src/application/update_likes/update-likes-command'
 
 const router = express.Router()
 
-router.post('/api/insert',
+router.post('/insert',
   [
     body('age')
       .isEmpty().withMessage(InvalidMessages.NOT_EMPTY)
@@ -38,6 +39,26 @@ router.post('/api/insert',
       const command = new SaveSecretCommand({ age, gender, secret, likes, anonName })
       const saveSecret = container.resolve('saveSecret')
       const response = await saveSecret.execute(command)
+
+      res.status(200).send(response)
+    } catch (error: unknown | undefined) {
+      if (error instanceof InvalidSecretError) {
+        res.status(409).json({message: error.message})
+      }
+      res.status(500).send({ message: 'An error occurred while processing your request.' })
+      console.log(error)
+    }
+  }
+)
+
+router.post('/updateLike',
+  async (req: express.Request, res: express.Response) => {
+    const { id, likes, isLike } = req.body
+
+    try {
+      const command = new UpdateLikeCommand({ id, likes, isLike })
+      const updateLike = container.resolve('updateLike')
+      const response = await updateLike.execute(command)
 
       res.status(200).send(response)
     } catch (error: unknown | undefined) {

@@ -3,6 +3,7 @@ import { MongoSecretRepository } from 'infrastructure/persistance/mongo/mongo-se
 import { DbHandler } from 'infrastructure/types/database'
 import { SecretEntity } from 'domain/types/Secret'
 import { SecretDocumentParser } from 'infrastructure/types/document-parser'
+import { UpdateLike } from 'application/update_likes'
 
 declare global {
   interface Dependencies {
@@ -11,5 +12,6 @@ declare global {
     dbHandler: DbHandler
     secret: SecretEntity
     secretDocumentParser: SecretDocumentParser
+    updateLike: UpdateLike
   }
 }

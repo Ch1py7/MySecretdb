@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb'
 import { UpdateLikeCommand } from './update-likes-command'
 import { UpdateLikeResponse } from './update-likes-response'
 
@@ -10,9 +9,8 @@ export class UpdateLike {
   }
 
   async execute({ id, isLike, likes }: UpdateLikeCommand) {
-    const _id = new ObjectId(id)
     const updateLike = { $set: { likes: isLike ? likes + 1 : likes } }
-    const like = { _id, updateLike}
+    const like = { id, updateLike}
 
     await this.secretRepository.updateLike(like)
 

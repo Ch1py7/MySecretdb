@@ -1,5 +1,7 @@
 import { Secret } from 'domain/secret/Secret'
 import { UpdateLike } from 'infrastructure/types/secret-repository'
+import { ObjectId } from 'mongodb'
+import { SaveSecretCommand } from 'src/application/save_secret/save-secret-command'
 
 const SECRETS = 'secrets'
 
@@ -12,26 +14,36 @@ export class MongoSecretRepository {
     this._secretDocumentParser = secretDocumentParser
   }
 
-  async save(secret: Secret) {
+  async save(secret: SaveSecretCommand) {
     const db = await this._dbHandler.getInstance()
     try {
-      const secretDomain = this._secretDocumentParser.toDocument(secret)
+      const secretDomain = new Secret(secret)
+      const secretData = this._secretDocumentParser.toDocument(secretDomain)
 
-      await db.collection(SECRETS).insertOne(secretDomain)
+      await db.collection(SECRETS).insertOne(secretData)
 
       return Promise.resolve()
-    } catch (error: unknown | undefined) {
-      console.error(error)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message)
+      } else {
+        console.error(error)
+      }
     }
   }
 
-  async updateLike({ _id ,updateLike }: UpdateLike) {
+  async updateLike({ id ,updateLike }: UpdateLike) {
     const db = await this._dbHandler.getInstance()
     try {
-      await db.collection(SECRETS).updateOne({ _id }, updateLike)
+      const _id = new ObjectId(id)
 
-    } catch (error: unknown | undefined) {
-      console.error(error)
+      await db.collection(SECRETS).updateOne({ _id }, updateLike)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message)
+      } else {
+        console.error(error)
+      }
     }
   }
 }

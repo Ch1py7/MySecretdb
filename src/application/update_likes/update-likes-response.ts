@@ -1,8 +1,7 @@
 import { UpdateLikeResponseConstructor } from 'application/types/update-like-constructor'
-import { ObjectId } from 'mongodb'
 
 export class UpdateLikeResponse {
-  private _id: ObjectId
+  private _id: string
 
   constructor({ id }: UpdateLikeResponseConstructor) {
     this._id = id

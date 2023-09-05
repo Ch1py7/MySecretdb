@@ -1,8 +1,7 @@
 import { UpdateLikeCommandConstructor } from 'application/types/update-like-constructor'
-import { ObjectId } from 'mongodb'
 
 export class UpdateLikeCommand {
-  id: ObjectId
+  id: string
   isLike: boolean
   likes: number
 

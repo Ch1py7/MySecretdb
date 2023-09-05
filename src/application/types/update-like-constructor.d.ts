@@ -1,11 +1,9 @@
-import { ObjectId } from 'mongodb'
-
 export interface UpdateLikeResponseConstructor {
-  id: ObjectId
+  id: string
 }
 
 export interface UpdateLikeCommandConstructor {
-  id: ObjectId
+  id: string
   isLike: boolean
   likes: number
 }

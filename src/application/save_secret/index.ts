@@ -1,4 +1,3 @@
-import { Secret } from 'domain/secret/Secret'
 import { SaveSecretCommand } from './save-secret-command'
 import { SaveSecretResponse } from './save-secret-response'
 
@@ -10,8 +9,7 @@ export class SaveSecret {
   }
 
   async execute(secret: SaveSecretCommand) {
-    const secretDomain = new Secret(secret)
-    await this.secretRepository.save(secretDomain)
-    return new SaveSecretResponse(secretDomain)
+    await this.secretRepository.save(secret)
+    return new SaveSecretResponse(secret)
   }
 }

@@ -46,7 +46,6 @@ router.post('/insert',
         res.status(409).json({message: error.message})
       }
       res.status(500).send({ message: 'An error occurred while processing your request.' })
-      console.log(error)
     }
   }
 )

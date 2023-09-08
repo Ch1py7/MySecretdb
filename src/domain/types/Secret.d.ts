@@ -1,9 +1,8 @@
-export type Gender = 'man' | 'woman' | 'other'
-
 export interface SecretEntity {
-  age: number,
-  gender: Gender,
-  secret: string,
+  id: string
+  age: number
+  gender: 'man' | 'woman' | 'other'
+  secret: string
   anonName: string
-  likes: number,
+  likes: number
 }

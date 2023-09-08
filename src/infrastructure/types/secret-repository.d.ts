@@ -1,8 +1,10 @@
 export interface UpdateLike {
-  updateLike: {
-    $set: {
-        likes: number;
-    };
-  }
+  likes: number
+  isLike: boolean
   id: string
+}
+
+export interface GetSecrets {
+  pageNumber: number
+  limit: number
 }

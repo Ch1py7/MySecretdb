@@ -9,11 +9,10 @@ export class UpdateLike {
   }
 
   async execute({ id, isLike, likes }: UpdateLikeCommand) {
-    const updateLike = { $set: { likes: isLike ? likes + 1 : likes } }
-    const like = { id, updateLike}
+    const likeData = { id, isLike, likes}
 
-    await this.secretRepository.updateLike(like)
+    await this.secretRepository.updateLike(likeData)
 
-    return new UpdateLikeResponse({ id }).getMessage(isLike)
+    return new UpdateLikeResponse({ id, isLike })
   }
 }

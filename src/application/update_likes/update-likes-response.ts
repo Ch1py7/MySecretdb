@@ -1,17 +1,19 @@
 import { UpdateLikeResponseConstructor } from 'application/types/update-like-constructor'
 
 export class UpdateLikeResponse {
-  private _id: string
+  id: string
+  isLike: boolean
 
-  constructor({ id }: UpdateLikeResponseConstructor) {
-    this._id = id
+  constructor({ id, isLike }: UpdateLikeResponseConstructor) {
+    this.id = id
+    this.isLike = isLike
   }
 
-  getMessage(isLike: boolean) {
-    if (isLike) {
-      return `Like increased by 1 for ${this._id}`
+  getMessage() {
+    if (this.isLike) {
+      return `Like increased by 1 for ${this.id}`
     } else {
-      return `Like decreased by 1 for ${this._id}`
+      return `Like decreased by 1 for ${this.id}`
     }
   }
 }

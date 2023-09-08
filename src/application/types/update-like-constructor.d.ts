@@ -1,5 +1,6 @@
 export interface UpdateLikeResponseConstructor {
   id: string
+  isLike: boolean
 }
 
 export interface UpdateLikeCommandConstructor {

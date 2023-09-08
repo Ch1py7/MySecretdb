@@ -21,6 +21,7 @@
     "express-validator": "7.0.1",
     "module-alias": "2.2.3",
     "mongodb": "5.7.0",
+    "uuid-mongodb": "^2.5.4",
     "vite": "4.4.7",
     "winston": "3.10.0"
   },
@@ -41,4 +42,3 @@
     "infrastructure": "dist/infrastructure"
   }
 }
-

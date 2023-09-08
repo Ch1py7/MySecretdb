@@ -1,7 +1,7 @@
 import { Secret } from 'domain/secret/Secret'
 import { SecretDocumentParser } from 'infrastructure/types/document-parser'
 
-export const secretParser = (from: Dependencies['from']): SecretDocumentParser => {
+export const secretParser = ({ from }: Dependencies['uuid']): SecretDocumentParser => {
   return {
     toDomain: ({ _id, age, anonName, gender, likes, secret }) => {
       const id = _id.toString()

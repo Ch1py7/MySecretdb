@@ -8,7 +8,7 @@ import * as mongodb from 'mongodb'
 import { GetSecrets } from 'application/get_secrets'
 import { IdGenerator } from 'domain/secret/services/id-generator'
 import * as crypto from 'crypto'
-import { from } from 'uuid-mongodb'
+import * as uuid from 'uuid-mongodb'
 
 const container = createContainer<Dependencies>({
   injectionMode: InjectionMode.PROXY,
@@ -24,7 +24,7 @@ container.register({
   getSecrets: asClass(GetSecrets),
   idGenerator: asClass(IdGenerator),
   crypto: asValue(crypto),
-  from: asValue(from)
+  uuid: asValue(uuid)
 })
 
 export default container

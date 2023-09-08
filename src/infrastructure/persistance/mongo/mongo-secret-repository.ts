@@ -5,12 +5,12 @@ const SECRETS = 'secrets'
 export class MongoSecretRepository {
   dbHandler: Dependencies['dbHandler']
   secretDocumentParser: Dependencies['secretDocumentParser']
-  from: Dependencies['from']
+  uuid: Dependencies['uuid']
 
-  constructor({ dbHandler, secretDocumentParser, from }: Pick<Dependencies, 'dbHandler' | 'secretDocumentParser' | 'from'>) {
+  constructor({ dbHandler, secretDocumentParser, uuid }: Pick<Dependencies, 'dbHandler' | 'secretDocumentParser' | 'uuid'>) {
     this.dbHandler = dbHandler
     this.secretDocumentParser = secretDocumentParser
-    this.from = from
+    this.uuid = uuid
   }
 
   async save({ id, age, anonName, gender, likes, secret }: Dependencies['secret']) {
@@ -33,7 +33,7 @@ export class MongoSecretRepository {
   async updateLike({ id , likes, isLike }: UpdateLike) {
     const db = await this.dbHandler.getInstance()
     try {
-      const _id = this.from(id)
+      const _id = this.uuid.from(id)
       const updateLike = isLike ? likes + 1 : likes
 
       await db.collection<{_id: Dependencies['muuid']}>(SECRETS).updateOne({ _id }, {

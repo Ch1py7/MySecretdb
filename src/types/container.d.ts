@@ -8,7 +8,8 @@ import { MongoSecretRepository } from 'infrastructure/persistance/mongo/mongo-se
 import { Collection, DbHandler } from 'infrastructure/types/database'
 import { SecretDocumentParser } from 'infrastructure/types/document-parser'
 import * as mongodb from 'mongodb'
-import { MUUID, from } from 'uuid-mongodb'
+import { MUUID } from 'uuid-mongodb'
+import * as uuid from 'uuid-mongodb'
   
 declare global {
   interface Dependencies {
@@ -23,7 +24,7 @@ declare global {
     idGenerator: IdGenerator
     crypto: typeof crypto
     collection: Collection
-    from: typeof from
+    uuid: typeof uuid
     muuid: MUUID
   }
 }

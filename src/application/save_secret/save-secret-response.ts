@@ -1,17 +1,11 @@
 import { SaveSecretResponseConstructor } from 'application/types/save-secret-constructor'
 
 export class SaveSecretResponse {
-  public age: number
-  public gender: 'man' | 'woman' | 'other'
-  public anonName: string
-  public secret: string
-  public likes: number
+  id: string
+  secret: string
 
-  constructor({ age, anonName, gender, likes, secret }: SaveSecretResponseConstructor) {
-    this.age = age
-    this.gender = gender
-    this.anonName = anonName
+  constructor({ id, secret }: SaveSecretResponseConstructor) {
+    this.id = id
     this.secret = secret
-    this.likes = likes
   }
 }

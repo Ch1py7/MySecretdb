@@ -1,17 +1,12 @@
-
-
 export interface SaveSecretResponseConstructor {
-  age: number,
-  gender: 'man' | 'woman' | 'other',
-  secret: string,
-  anonName: string
-  likes: number,
+  id: string
+  secret: string
 }
 
 export interface SaveSecretCommandConstructor {
-  age: number,
-  gender: 'man' | 'woman' | 'other',
-  secret: string,
+  age: number
+  gender: 'man' | 'woman' | 'other'
+  secret: string
   anonName: string
-  likes: number,
+  likes: number
 }

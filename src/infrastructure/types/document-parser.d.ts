@@ -1,9 +1,18 @@
-import { SecretEntity } from 'domain/types/Secret'
-import { Secret } from 'domain/secret/Secret'
+import { SecretEntity } from 'src/domain/types/Secret'
+import { MUUID } from 'uuid-mongodb'
 
-export interface DocumentParser<T, U> {
-  toDomain: (document: T) => U
-	toDocument: (entity: U) => T
+export type SecretDocumentParser = SecretParser
+
+export interface SecretParser {
+  toDomain: (document: DocumentParser) => SecretEntity
+	toDocument: (entity: SecretEntity) => DocumentParser
 }
 
-export type SecretDocumentParser = DocumentParser<SecretEntity, Secret>
+export interface DocumentParser {
+  _id: MUUID
+  age: number
+  gender: 'man' | 'woman' | 'other'
+  secret: string
+  anonName: string
+  likes: number
+}

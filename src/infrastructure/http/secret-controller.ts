@@ -1,10 +1,11 @@
 import { SaveSecretCommand } from 'application/save_secret/save-secret-command'
+import { InvalidSecretError } from 'domain/secret/errors/invalid-secret-error'
 import express from 'express'
 import { body } from 'express-validator'
-import container from 'src/container'
-import { InvalidSecretError } from 'domain/secret/errors/invalid-secret-error'
-import { InvalidMessages } from './validation-values'
+import { GetSecretsCommand } from 'src/application/get_secrets/get-secrets-command'
 import { UpdateLikeCommand } from 'src/application/update_likes/update-likes-command'
+import container from 'src/container'
+import { InvalidMessages } from './validation-values'
 
 const router = express.Router()
 
@@ -33,15 +34,15 @@ router.post('/insert',
       .withMessage(InvalidMessages.INVALID_ANONNAME),
   ],
   async (req: express.Request, res: express.Response) => {
-    const { age, gender, secret, likes, anonName } = req.body
+    const { age, gender, secret, likes, anonName }: SaveSecretCommand = req.body
 
     try {
       const command = new SaveSecretCommand({ age, gender, secret, likes, anonName })
       const saveSecret = container.resolve('saveSecret')
       const response = await saveSecret.execute(command)
 
-      res.status(200).send(response)
-    } catch (error: unknown | undefined) {
+      res.status(201).send(response)
+    } catch (error: unknown) {
       if (error instanceof InvalidSecretError) {
         res.status(409).json({message: error.message})
       }
@@ -59,16 +60,37 @@ router.post('/updateLike',
       const updateLike = container.resolve('updateLike')
       const response = await updateLike.execute(command)
 
-      res.status(200).send(response)
-    } catch (error: unknown | undefined) {
+      res.status(200).send(response.getMessage())
+    } catch (error: unknown) {
       if (error instanceof InvalidSecretError) {
         res.status(409).json({message: error.message})
       }
       res.status(500).send({ message: 'An error occurred while processing your request.' })
-      console.log(error)
+      console.error(error)
+    }
+  }
+)
+
+router.get('/getSecrets',
+  async (req: express.Request, res: express.Response) => {
+    const { page, pageSize } = req.query
+    const pageNumber = parseInt(page as string, 1) || 1
+    const limit = parseInt(pageSize as string, 10) || 10
+
+    try {
+      const command = new GetSecretsCommand({ pageNumber, limit })
+      const getSecrets = container.resolve('getSecrets')
+      const response = await getSecrets.execute(command)
+
+      res.status(200).send(response)
+    } catch (error: unknown) {
+      if (error instanceof InvalidSecretError) {
+        res.status(409).json({message: error.message})
+      }
+      res.status(500).send({ message: 'An error occurred while processing your request.' })
+      console.error(error)
     }
   }
 )
 
 export { router }
-

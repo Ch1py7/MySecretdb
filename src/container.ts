@@ -1,8 +1,8 @@
-import { InjectionMode, asClass, asFunction, createContainer, asValue } from 'awilix'
+import { InjectionMode, asClass, createContainer, asValue } from 'awilix'
 import { SaveSecret } from 'application/save_secret'
 import { DbHandler } from 'infrastructure/persistance/mongo/db-handler'
-import { MongoSecretRepository } from 'infrastructure/persistance/mongo/mongo-secret-repository'
-import { secretParser } from 'infrastructure/persistance/mongo/secret-document-parser'
+import { SecretRepository } from 'infrastructure/persistance/mongo/mongo-secret-repository'
+import { SecretParser } from 'infrastructure/persistance/mongo/secret-document-parser'
 import { UpdateLike } from 'application/update_likes'
 import * as mongodb from 'mongodb'
 import { GetSecrets } from 'application/get_secrets'
@@ -15,10 +15,10 @@ const container = createContainer<Dependencies>({
 })
 
 container.register({
-  dbHandler: asFunction(DbHandler),
-  secretDocumentParser: asFunction(secretParser),
+  dbHandler: asValue(DbHandler),
+  secretParser: asClass(SecretParser),
   saveSecret: asClass(SaveSecret),
-  secretRepository: asClass(MongoSecretRepository),
+  secretRepository: asClass(SecretRepository),
   updateLike: asClass(UpdateLike),
   mongodb: asValue(mongodb),
   getSecrets: asClass(GetSecrets),

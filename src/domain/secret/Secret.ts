@@ -8,8 +8,9 @@ export class Secret implements SecretEntity {
   private _anonName: string
   private _secret: string
   private _likes: number
+  private _createdAt: number
 
-  constructor({ id, age, gender, secret, likes, anonName }: SecretEntity) {
+  constructor({ id, age, gender, secret, likes, anonName, createdAt }: SecretEntity) {
     this._id = id
     this._assertId(id)
     this._age = age
@@ -22,6 +23,7 @@ export class Secret implements SecretEntity {
     this._assertLikes(likes)
     this._anonName = anonName
     this._assertAnonName(anonName)
+    this._createdAt = createdAt
   }
 
   get id(): string {
@@ -78,6 +80,15 @@ export class Secret implements SecretEntity {
     this._anonName = anonName
   }
 
+  get createdAt(): number {
+    return this._createdAt
+  }
+
+  set createdAt(createdAt: number) {
+    this._assertCreatedAt(createdAt)
+    this._createdAt = createdAt
+  }
+
   private _assertId(id: string) {
     if (typeof id !== 'string' || id.length !== 36) {
       throw new InvalidSecretError(InvalidSecretMessages.INVALID_ID)
@@ -111,6 +122,12 @@ export class Secret implements SecretEntity {
   private _assertAnonName(anonName: string) {
     if (typeof anonName !== 'string' || anonName.length > 10) {
       throw new InvalidSecretError(InvalidSecretMessages.INVALID_ANONNAME)
+    }
+  }
+
+  private _assertCreatedAt(createdAt: number) {
+    if (typeof createdAt !== 'object') {
+      throw new InvalidSecretError(InvalidSecretMessages.INVALID_DATE)
     }
   }
 }

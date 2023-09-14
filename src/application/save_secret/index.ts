@@ -12,7 +12,11 @@ export class SaveSecret {
 
   async execute({ age, anonName, gender, likes, secret }: SaveSecretCommand) {
     const id = this.idGenerator.generate()
+
+    const currentDate = new Date().getTime()
+
     const secretDomain = new Secret({
+      createdAt: currentDate,
       id,
       age,
       anonName,
@@ -23,6 +27,6 @@ export class SaveSecret {
 
     await this.secretRepository.save(secretDomain)
 
-    return new SaveSecretResponse({ id, secret })
+    return new SaveSecretResponse({ id, secret, createdAt: currentDate })
   }
 }

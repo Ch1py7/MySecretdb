@@ -3,9 +3,11 @@ import { SaveSecretResponseConstructor } from 'application/types/save-secret-con
 export class SaveSecretResponse {
   id: string
   secret: string
+  createdAt: number
 
-  constructor({ id, secret }: SaveSecretResponseConstructor) {
+  constructor({ id, secret, createdAt }: SaveSecretResponseConstructor) {
     this.id = id
     this.secret = secret
+    this.createdAt = createdAt
   }
 }

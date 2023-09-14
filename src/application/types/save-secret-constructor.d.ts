@@ -1,6 +1,7 @@
 export interface SaveSecretResponseConstructor {
   id: string
   secret: string
+  createdAt: number
 }
 
 export interface SaveSecretCommandConstructor {

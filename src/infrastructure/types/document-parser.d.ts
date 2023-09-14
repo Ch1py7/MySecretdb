@@ -15,4 +15,5 @@ export interface DocumentParser {
   secret: string
   anonName: string
   likes: number
+  createdAt: number
 }

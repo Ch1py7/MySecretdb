@@ -11,5 +11,6 @@ export enum InvalidSecretMessages {
   INVALID_SECRET = 'Property "secret" is required and must be a string with a maximum of 420 characters',
   INVALID_LIKES = 'Property "likes" is required and must be a number',
   INVALID_ANONNAME = 'Property "anonName" is required and must be a string with a maximum of 10 characters',
-  INVALID_ID = 'Property "id" is required and must have a maximum of 36 characters'
+  INVALID_ID = 'Property "id" is required and must have a maximum of 36 characters',
+  INVALID_DATE = 'Property "createdAt" is required and must be an object (Date) type'
 }

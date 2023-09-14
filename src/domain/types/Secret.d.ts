@@ -5,4 +5,5 @@ export interface SecretEntity {
   secret: string
   anonName: string
   likes: number
+  createdAt: number
 }

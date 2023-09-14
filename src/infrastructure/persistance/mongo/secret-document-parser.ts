@@ -9,7 +9,7 @@ export class SecretParser {
     this._uuid = uuid
   }
 
-  toDomain({ _id, age, anonName, gender, likes, secret }: DocumentParser) {
+  toDomain({ _id, age, anonName, gender, likes, secret, createdAt }: DocumentParser) {
     const id = _id.toString()
     return new Secret({
       id,
@@ -17,11 +17,12 @@ export class SecretParser {
       anonName,
       gender,
       likes,
-      secret
+      secret,
+      createdAt
     })
   }
 
-  toDocument({ id, age, anonName, gender, likes, secret }: SecretEntity) {
+  toDocument({ id, age, anonName, gender, likes, secret, createdAt }: SecretEntity) {
     const _id = this._uuid.from(id)
     return {
       _id,
@@ -30,6 +31,7 @@ export class SecretParser {
       gender,
       likes,
       secret,
+      createdAt
     }
   }
 }

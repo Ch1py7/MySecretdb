@@ -13,10 +13,10 @@ export class SecretRepository {
     this.uuid = uuid
   }
 
-  async save({ id, age, anonName, gender, likes, secret }: Dependencies['secret']) {
+  async save({ id, age, anonName, gender, likes, secret, createdAt }: Dependencies['secret']) {
     const db = await this.dbHandler().getInstance()
     try {
-      const secretDomain = { id, age, anonName, gender, likes, secret }
+      const secretDomain = { id, age, anonName, gender, likes, secret, createdAt }
       const secretDocument = this.secretParser.toDocument(secretDomain)
 
       await db.collection<Dependencies['documentParser']>(SECRETS).insertOne(secretDocument)
@@ -53,15 +53,10 @@ export class SecretRepository {
 
   async getSecrets({ pageNumber, limit }: GetSecrets) {
     const db = await this.dbHandler().getInstance()
-    const skip = (pageNumber - 1) * limit
-
+    
     try {
-      const secretsData = await db.collection(SECRETS).aggregate<Dependencies['secret']>([
-        { $sort: { _id: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ])
-        .toArray()
+      const skip = (pageNumber - 1) * limit
+      const secretsData = await db.collection(SECRETS).find().sort({ createdAt: -1 }).skip(skip).limit(limit).toArray()
       
       return secretsData
     } catch (error: unknown) {

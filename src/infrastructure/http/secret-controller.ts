@@ -74,7 +74,7 @@ router.post('/updateLike',
 router.get('/getSecrets',
   async (req: express.Request, res: express.Response) => {
     const { page, pageSize } = req.query
-    const pageNumber = parseInt(page as string, 1) || 1
+    const pageNumber = parseInt(page as string, 10) || 1
     const limit = parseInt(pageSize as string, 10) || 10
 
     try {
